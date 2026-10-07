@@ -1,0 +1,18 @@
+{
+  "name": "Расписание",
+  "short_name": "Расписание",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#161719",
+  "theme_color": "#161719",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2343464a'/%3E%3Cstop offset='1' stop-color='%231d1f21'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='118' fill='%23141618'/%3E%3Crect x='76' y='92' width='360' height='326' rx='66' fill='url(%23a)' stroke='%23fff' stroke-opacity='.28' stroke-width='6'/%3E%3Cpath d='M76 157c0-36 30-65 66-65h228c36 0 66 29 66 65v34H76z' fill='%23fff' fill-opacity='.09'/%3E%3Crect x='148' y='64' width='42' height='96' rx='21' fill='%23f4f4f5' fill-opacity='.92'/%3E%3Crect x='322' y='64' width='42' height='96' rx='21' fill='%23f4f4f5' fill-opacity='.92'/%3E%3Cg fill='%23fff' fill-opacity='.82'%3E%3Crect x='122' y='230' width='72' height='52' rx='17'/%3E%3Crect x='220' y='230' width='170' height='52' rx='17'/%3E%3Crect x='122' y='300' width='72' height='52' rx='17'/%3E%3Crect x='220' y='300' width='134' height='52' rx='17'/%3E%3C/g%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

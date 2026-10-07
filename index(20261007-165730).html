@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#151618">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Расписание">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2343464a'/%3E%3Cstop offset='1' stop-color='%231d1f21'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='118' fill='%23141618'/%3E%3Crect x='76' y='92' width='360' height='326' rx='66' fill='url(%23a)' stroke='%23fff' stroke-opacity='.28' stroke-width='6'/%3E%3Cpath d='M76 157c0-36 30-65 66-65h228c36 0 66 29 66 65v34H76z' fill='%23fff' fill-opacity='.09'/%3E%3Crect x='148' y='64' width='42' height='96' rx='21' fill='%23f4f4f5' fill-opacity='.92'/%3E%3Crect x='322' y='64' width='42' height='96' rx='21' fill='%23f4f4f5' fill-opacity='.92'/%3E%3Cg fill='%23fff' fill-opacity='.82'%3E%3Crect x='122' y='230' width='72' height='52' rx='17'/%3E%3Crect x='220' y='230' width='170' height='52' rx='17'/%3E%3Crect x='122' y='300' width='72' height='52' rx='17'/%3E%3Crect x='220' y='300' width='134' height='52' rx='17'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2343464a'/%3E%3Cstop offset='1' stop-color='%231d1f21'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='118' fill='%23141618'/%3E%3Crect x='76' y='92' width='360' height='326' rx='66' fill='url(%23a)' stroke='%23fff' stroke-opacity='.28' stroke-width='6'/%3E%3Cpath d='M76 157c0-36 30-65 66-65h228c36 0 66 29 66 65v34H76z' fill='%23fff' fill-opacity='.09'/%3E%3Crect x='148' y='64' width='42' height='96' rx='21' fill='%23f4f4f5' fill-opacity='.92'/%3E%3Crect x='322' y='64' width='42' height='96' rx='21' fill='%23f4f4f5' fill-opacity='.92'/%3E%3Cg fill='%23fff' fill-opacity='.82'%3E%3Crect x='122' y='230' width='72' height='52' rx='17'/%3E%3Crect x='220' y='230' width='170' height='52' rx='17'/%3E%3Crect x='122' y='300' width='72' height='52' rx='17'/%3E%3Crect x='220' y='300' width='134' height='52' rx='17'/%3E%3C/g%3E%3C/svg%3E">
+<title>Расписание</title>
+<style>
+:root{
+  --bg:#161719;
+  --bg-deep:#101113;
+  --glass:rgba(255,255,255,.075);
+  --glass-2:rgba(255,255,255,.11);
+  --glass-3:rgba(255,255,255,.15);
+  --text:#f7f7f8;
+  --muted:#a8aaae;
+  --line:rgba(255,255,255,.13);
+  --line-soft:rgba(255,255,255,.075);
+  --shadow:0 24px 80px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(1000px 500px at 8% -8%,rgba(255,255,255,.07),transparent 55%),
+    radial-gradient(850px 520px at 96% 100%,rgba(255,255,255,.045),transparent 60%),
+    linear-gradient(150deg,#121315 0%,#1a1b1e 48%,#111214 100%);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(120deg,rgba(255,255,255,.045),transparent 24%,rgba(255,255,255,.02) 58%,transparent 78%);
+}
+button{font:inherit;color:inherit}
+.app{width:min(1180px,100%);margin:0 auto;padding:clamp(20px,3vw,48px) clamp(14px,3vw,32px) 32px}
+.shell{
+  border:1px solid var(--line);
+  border-radius:34px;
+  background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.045));
+  backdrop-filter:blur(30px) saturate(108%);
+  -webkit-backdrop-filter:blur(30px) saturate(108%);
+  box-shadow:var(--shadow),inset 0 1px rgba(255,255,255,.09);
+  overflow:hidden;
+}
+.header{
+  padding:26px 30px 23px;
+  border-bottom:1px solid var(--line-soft);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),transparent);
+}
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.identity{display:flex;align-items:center;gap:15px;min-width:0}
+.icon{
+  width:52px;height:52px;flex:0 0 auto;border-radius:17px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#3a3d41,#202225);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 1px rgba(255,255,255,.1),0 12px 30px rgba(0,0,0,.25)
+}
+.icon svg{width:31px;height:31px;opacity:.95}
+.title{font-size:28px;font-weight:760;letter-spacing:-.035em}
+.meta{margin-top:4px;color:var(--muted);font-size:14px;font-weight:540}
+.day-switch{display:flex;align-items:center;gap:9px}
+.nav-btn{
+  width:48px;height:48px;border-radius:16px;border:1px solid var(--line);background:var(--glass-2);
+  display:grid;place-items:center;cursor:pointer;transition:transform .2s ease,background .2s ease,border-color .2s ease;
+  box-shadow:inset 0 1px rgba(255,255,255,.08),0 8px 22px rgba(0,0,0,.2)
+}
+.nav-btn:hover{transform:translateY(-2px);background:var(--glass-3);border-color:rgba(255,255,255,.22)}
+.nav-btn:active{transform:scale(.96)}
+.nav-btn[disabled]{opacity:.28;cursor:default;transform:none}
+.nav-btn svg{width:21px;height:21px}
+.day-info{min-width:0;text-align:right}
+.day-name{font-size:30px;font-weight:780;letter-spacing:-.045em}
+.day-date{margin-top:3px;color:var(--muted);font-size:15px;font-weight:560}
+.schedule-wrap{padding:18px}
+.schedule-card{
+  border-radius:26px;border:1px solid var(--line-soft);background:rgba(255,255,255,.035);
+  padding:10px;
+}
+.lesson{
+  min-height:76px;display:grid;grid-template-columns:50px minmax(0,1fr) auto;align-items:center;gap:16px;
+  padding:12px 17px;border-radius:19px;border:1px solid transparent;
+  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+  transition:transform .18s ease,background .18s ease,border-color .18s ease;
+}
+.lesson + .lesson{margin-top:7px}
+.lesson:hover{transform:translateY(-1px);background:linear-gradient(145deg,rgba(255,255,255,.115),rgba(255,255,255,.05));border-color:rgba(255,255,255,.09)}
+.num{
+  width:50px;height:50px;border-radius:16px;display:grid;place-items:center;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);font-size:16px;font-weight:760;
+  box-shadow:inset 0 1px rgba(255,255,255,.06)
+}
+.subject{font-size:20px;line-height:1.2;font-weight:680;letter-spacing:-.02em}
+.time{font-size:15px;color:#c2c3c7;font-weight:590;white-space:nowrap}
+.bottom{padding:0 18px 18px}
+.next-button{
+  width:100%;min-height:58px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.075);
+  display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;
+  box-shadow:inset 0 1px rgba(255,255,255,.075),0 10px 30px rgba(0,0,0,.2);
+  transition:transform .2s ease,background .2s ease,border-color .2s ease;
+  font-size:16px;font-weight:700;
+}
+.next-button:hover{transform:translateY(-1px);background:rgba(255,255,255,.105);border-color:rgba(255,255,255,.2)}
+.next-button:active{transform:scale(.99)}
+.next-button svg{width:19px;height:19px}
+.empty{
+  min-height:210px;display:grid;place-items:center;text-align:center;padding:30px;color:var(--muted);font-size:16px
+}
+.empty strong{display:block;color:var(--text);font-size:22px;margin-bottom:5px}
+.fade-in{animation:fade .34s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@media (max-width:720px){
+  .app{padding:10px 9px 18px}
+  .shell{border-radius:25px}
+  .header{padding:17px 14px 15px}
+  .header-row{gap:10px}
+  .identity{gap:10px}
+  .icon{width:42px;height:42px;border-radius:13px}
+  .icon svg{width:25px;height:25px}
+  .title{font-size:21px}
+  .meta{font-size:11px;margin-top:2px}
+  .day-info{min-width:0;flex:0 0 auto;text-align:right}
+  .day-name{font-size:22px}
+  .day-date{font-size:11px;margin-top:2px}
+  .day-switch{gap:6px}
+  .nav-btn{width:38px;height:38px;border-radius:13px}
+  .nav-btn svg{width:17px;height:17px}
+  .schedule-wrap{padding:9px}
+  .schedule-card{padding:6px;border-radius:19px}
+  .lesson{min-height:58px;grid-template-columns:38px minmax(0,1fr) auto;gap:10px;padding:8px 9px;border-radius:15px}
+  .lesson + .lesson{margin-top:5px}
+  .num{width:38px;height:38px;border-radius:12px;font-size:13px}
+  .subject{font-size:15px;line-height:1.14}
+  .time{font-size:11px}
+  .bottom{padding:0 9px 9px}
+  .next-button{min-height:48px;border-radius:16px;font-size:14px}
+  .next-button svg{width:17px;height:17px}
+  .empty{min-height:180px;font-size:14px}
+  .empty strong{font-size:20px}
+}
+@media (max-width:380px){
+  .title{font-size:19px}
+  .day-name{font-size:20px}
+  .lesson{min-height:54px;grid-template-columns:34px minmax(0,1fr) auto;gap:8px;padding:7px 8px}
+  .num{width:34px;height:34px;border-radius:11px;font-size:12px}
+  .subject{font-size:14px}
+  .time{font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="shell">
+    <header class="header">
+      <div class="header-row">
+        <div class="identity">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="7" y="10" width="34" height="31" rx="8" fill="white" fill-opacity=".08" stroke="white" stroke-opacity=".62"/>
+              <path d="M7 18h34" stroke="white" stroke-opacity=".48" stroke-width="2"/>
+              <rect x="14" y="6" width="4" height="10" rx="2" fill="white" fill-opacity=".92"/>
+              <rect x="30" y="6" width="4" height="10" rx="2" fill="white" fill-opacity=".92"/>
+              <rect x="13" y="24" width="7" height="6" rx="2" fill="white" fill-opacity=".84"/>
+              <rect x="22" y="24" width="7" height="6" rx="2" fill="white" fill-opacity=".84"/>
+              <rect x="31" y="24" width="4" height="6" rx="2" fill="white" fill-opacity=".84"/>
+              <rect x="13" y="33" width="7" height="5" rx="2" fill="white" fill-opacity=".68"/>
+              <rect x="22" y="33" width="13" height="5" rx="2" fill="white" fill-opacity=".68"/>
+            </svg>
+          </div>
+          <div>
+            <div class="title">Расписание</div>
+            <div class="meta" id="todayMeta"></div>
+          </div>
+        </div>
+        <div class="day-info">
+          <div class="day-name" id="dayName"></div>
+          <div class="day-date" id="dayDate"></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="schedule-wrap">
+      <div id="schedule" class="schedule-card fade-in"></div>
+    </section>
+    <div class="bottom" id="bottom"></div>
+  </section>
+</main>
+
+<script>
+const SCHEDULE = {
+  1: [
+    ['Классный час','07:55 – 08:25'],
+    ['Английский язык / Информатика','08:30 – 09:10'],
+    ['Английский язык / Информатика','09:25 – 10:05'],
+    ['Русский язык','10:10 – 10:50'],
+    ['Алгебра','11:05 – 11:45'],
+    ['Английский язык','11:50 – 12:30'],
+    ['Всемирная история','12:35 – 13:15'],
+    ['','13:20 – 14:00']
+  ],
+  2: [
+    ['Геометрия','08:00 – 08:40'],
+    ['Основы бизнеса','08:45 – 09:25'],
+    ['Казахский язык и литература','09:40 – 10:20'],
+    ['Русская литература','10:25 – 11:05'],
+    ['Физика','11:20 – 12:00'],
+    ['НВП','12:05 – 12:45'],
+    ['','12:50 – 13:30'],
+    ['','13:35 – 14:00']
+  ],
+  3: [
+    ['География','08:00 – 08:40'],
+    ['Всемирная история','08:45 – 09:25'],
+    ['Алгебра','09:40 – 10:20'],
+    ['Русский язык','10:25 – 11:05'],
+    ['Физкультура','11:20 – 12:00'],
+    ['Казахский язык и литература','12:05 – 12:45'],
+    ['','12:50 – 13:30'],
+    ['','13:35 – 14:00']
+  ],
+  4: [
+    ['Физика','08:00 – 08:40'],
+    ['Английский язык','08:45 – 09:25'],
+    ['Казахский язык и литература','09:40 – 10:20'],
+    ['Русская литература','10:25 – 11:05'],
+    ['История Казахстана','11:20 – 12:00'],
+    ['Физкультура','12:05 – 12:45'],
+    ['Личная безопасность','12:50 – 13:30'],
+    ['','13:35 – 14:00']
+  ],
+  5: [
+    ['Физкультура','08:00 – 08:40'],
+    ['География','08:45 – 09:25'],
+    ['Основы бизнеса','09:40 – 10:20'],
+    ['История Казахстана','10:25 – 11:05'],
+    ['Алгебра','11:20 – 12:00'],
+    ['Английский язык','12:05 – 12:45'],
+    ['','12:50 – 13:30'],
+    ['','13:35 – 14:00']
+  ]
+};
+
+const WEEKDAYS = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+let today = getDateOnly(new Date());
+let selected = getInitialSchoolDay(today);
+
+function getDateOnly(d){
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function getInitialSchoolDay(d){
+  const x = getDateOnly(d);
+  if(x.getDay() === 6) x.setDate(x.getDate()+2);
+  if(x.getDay() === 0) x.setDate(x.getDate()+1);
+  return x;
+}
+
+function shiftSchoolDay(d, amount){
+  const x = getDateOnly(d);
+  const step = amount >= 0 ? 1 : -1;
+  let left = Math.abs(amount);
+  while(left){
+    x.setDate(x.getDate()+step);
+    if(x.getDay() >= 1 && x.getDay() <= 5) left--;
+  }
+  return x;
+}
+
+function sameDay(a,b){
+  return a.getTime() === b.getTime();
+}
+
+function formatDate(d, year=false){
+  return `${d.getDate()} ${MONTHS[d.getMonth()]}${year ? ` ${d.getFullYear()}` : ''}`;
+}
+
+function iconArrow(){
+  return '<svg viewBox="0 0 24 24" fill="none"><path d="m9.5 5 6.5 7-6.5 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function render(){
+  today = getDateOnly(new Date());
+  const schedule = (SCHEDULE[selected.getDay()] || []).filter(item => item[0]);
+
+  document.getElementById('todayMeta').textContent = formatDate(today, true);
+  document.getElementById('dayName').textContent = WEEKDAYS[selected.getDay()];
+  document.getElementById('dayDate').textContent = formatDate(selected);
+  const wrap = document.getElementById('schedule');
+  wrap.classList.remove('fade-in');
+  void wrap.offsetWidth;
+  wrap.classList.add('fade-in');
+
+  wrap.innerHTML = '';
+  if(!schedule.length){
+    wrap.innerHTML = '<div class="empty"><div><strong>На этот день уроков нет</strong>Нет занятий в расписании.</div></div>';
+  } else {
+    schedule.forEach((item, i) => {
+      const row = document.createElement('article');
+      row.className = 'lesson';
+      row.innerHTML = `
+        <div class="num">${i+1}</div>
+        <div class="subject">${item[0]}</div>
+        <div class="time">${item[1]}</div>
+      `;
+      wrap.appendChild(row);
+    });
+  }
+
+  const next = shiftSchoolDay(selected, 1);
+  const bottom = document.getElementById('bottom');
+  bottom.innerHTML = `
+    <button class="next-button" id="nextDayBtn" type="button" aria-label="Перейти к следующему учебному дню">
+      <span>Следующий день · ${WEEKDAYS[next.getDay()]}, ${next.getDate()} ${MONTHS[next.getMonth()]}</span>
+      ${iconArrow()}
+    </button>
+  `;
+  document.getElementById('nextDayBtn').addEventListener('click', () => {
+    selected = next;
+    render();
+  });
+}
+
+setInterval(() => {
+  const fresh = getDateOnly(new Date());
+  if(!sameDay(fresh, today)){
+    today = fresh;
+    selected = getInitialSchoolDay(today);
+    render();
+  }
+}, 30000);
+
+render();
+</script>
+</body>
+</html>
